@@ -5,6 +5,18 @@ var gulp = require('gulp');
 var server = require('gulp-express');
 var serverOptions = ['./server.js'];
 
+gulp.task('build', function() {
+  gulp
+    .src('./bower_components/angular/angular.js')
+    .pipe(gulp.dest('./public/javascripts/'))
+});
+
+gulp.task('app', function() {
+  gulp
+    .src('./app/app.js')
+    .pipe(gulp.dest('./public/javascripts/'))
+});
+
 // This is a bug fix
 gulp.task('express:run', function(cb) {
   // Start the server at the beginning of the task
@@ -18,10 +30,10 @@ gulp.task('server', ['express:run'], function () {
   gulp.watch(
     [
       'views/**/*.jade',
-      './public/**/*.js'
+      'public/**/*.js'
     ], server.notify);
 
-
+  gulp.watch(['./app/**/*.js'], ['app']);
   gulp.watch(['server.js'], ['express:run']);
 });
 
