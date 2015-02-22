@@ -25,7 +25,7 @@ gulp.task('express:run', function(cb) {
 });
 
 // Running the express server
-gulp.task('server', ['express:run'], function () {
+gulp.task('server', ['build', 'app', 'express:run'], function () {
   // Restart the server when file changes
   gulp.watch(
     [

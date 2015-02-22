@@ -17,5 +17,5 @@ app.controller('KeyMapping', ['$scope', function($scope) {
     }, {});
   };
 
-  $scope.test = "andrei"
+  $scope.test = "everyone"
 }]);
