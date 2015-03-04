@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  body(ng-controller="KeyMapping", ng-keydown="clickMe($event)", tabindex='0')
+    h1= title
+    p Welcome {{test}} to #{title}
+    div
+      | {{key}} and {{press}}
+      code pressEvent
+      pre {{pressEvent | json}}
