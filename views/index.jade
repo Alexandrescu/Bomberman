@@ -4,7 +4,12 @@ block content
   body(ng-controller="KeyMapping", ng-keydown="clickMe($event)", tabindex='0')
     h1= title
     p Welcome {{test}} to #{title}
-    div
-      | {{key}} and {{press}}
-      code pressEvent
-      pre {{pressEvent | json}}
+    div(class='row')
+      div(class='col-md-3')
+        | {{key}} and {{press}}
+        code pressEvent
+        pre {{pressEvent | json}}
+      div(class='gameBoard col-md-9')
+        div(ng-repeat="line in gameBoard" class='gameRow')
+          div(ng-repeat="place in line" class='gameCell' ng-class='{heroCell: $parent.$index == heroY && $index == heroX}')
+            | ({{$parent.$index}}, {{$index}})
