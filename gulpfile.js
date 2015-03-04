@@ -8,12 +8,15 @@ var serverOptions = ['./server.js'];
 gulp.task('build', function() {
   gulp
     .src('./bower_components/angular/angular.js')
-    .pipe(gulp.dest('./public/javascripts/'))
+    .pipe(gulp.dest('./public/javascripts/'));
+  gulp
+    .src('./bower_components/bootstrap/dist/css/bootstrap.min.css')
+    .pipe(gulp.dest('./public/stylesheets'));
 });
 
 gulp.task('app', function() {
   gulp
-    .src('./app/app.js')
+    .src('./app/*.js')
     .pipe(gulp.dest('./public/javascripts/'))
 });
 
