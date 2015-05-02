@@ -1,25 +1,21 @@
 var app = angular.module('mapApp', []);
 
-app.controller('KeyMapping', ['$scope', function($scope) {
-  $scope.gameBoard = [
-    [1, 2, 3, 4, 5, 6, 7, 8],
-    [1, 2, 3, 4, 5, 6, 7, 8],
-    [1, 2, 3, 4, 5, 6, 7, 8],
-    [1, 2, 3, 4, 5, 6, 7, 8],
-    [1, 2, 3, 4, 5, 6, 7, 8],
-    [1, 2, 3, 4, 5, 6, 7, 8],
-    [1, 2, 3, 4, 5, 6, 7, 8],
-    [1, 2, 3, 4, 5, 6, 7, 8]
-  ];
+app.controller('KeyMapping', ['$scope', 'mapLevel', function($scope, mapLevel) {
+  $scope.level = 1;
+
+  $scope.gameBoard = mapLevel.map;
 
   $scope.boardSize = {
-    height: 8,
-    width : 8
+    height: $scope.gameBoard.length,
+    width : $scope.gameBoard[0].length
   };
 
-  $scope.heroX = $scope.heroY = 0;
+  $scope.heroX = 16;
+  $scope.heroY = 4;
 
-  $scope.clickMe = function($event) {
+  $scope.cellSize = 40;
+
+  $scope.buttonPress = function($event) {
     $scope.press = $event.keyCode;
     $scope.key = String.fromCharCode($scope.press);
     $scope.pressEvent = simpleKeys($event);
@@ -42,7 +38,7 @@ app.controller('KeyMapping', ['$scope', function($scope) {
     38 : up,
     39 : right,
     40 : down
-  }
+  };
 
   function normalize(keyCode) {
     if(keyMap.hasOwnProperty(keyCode)) {
@@ -71,7 +67,5 @@ app.controller('KeyMapping', ['$scope', function($scope) {
       obj[key] = typeof original[key] === 'object' ? '{ ... }' : original[key];
       return obj;
     }, {});
-  };
-
-  $scope.test = "everyone"
+  }
 }]);
