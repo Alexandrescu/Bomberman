@@ -1,7 +1,8 @@
 var app = angular.module('mapApp', []);
 
 app.controller('KeyMapping', ['$scope', 'mapLevel', function($scope, mapLevel) {
-  $scope.level = 1;
+  $scope.level = 2;
+  mapLevel.setLevel($scope.level);
 
   $scope.gameBoard = mapLevel.map;
 

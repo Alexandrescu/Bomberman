@@ -1,4 +1,4 @@
-div(ng-class='{"level1": level == 1}',
+div(ng-class='{"level1": level == 1, "level2": level == 2}',
 ng-style='{"width": (cellSize * boardSize.width) + "px", "height": (cellSize * boardSize.height) + "px"}')
   div(ng-repeat="line in gameBoard track by $index" class='gameRow')
     div(ng-repeat="place in line track by $index", class='gameCell',

@@ -2,8 +2,9 @@ extends layout
 
 block content
   body(ng-controller="KeyMapping", ng-keydown="buttonPress($event)", tabindex='0')
-    h1= title
     p Welcome to #{title}
+    button(type="button" class="btn btn-primary") Level 1
+    button(type="button" class="btn btn-success") Level 2
     div(class='row', style='height:100%')
       div(class='col-md-2')
         | {{key}} and {{press}}
