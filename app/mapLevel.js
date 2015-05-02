@@ -72,12 +72,20 @@ app.factory('mapLevel', function (){
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
   ];
 
+  var startPositions = [];
+  startPositions[1] = {
+    x:16, y:4
+  };
+  startPositions[2] = {
+    x:0, y:6
+  };
 
   var board = {};
 
   board.setLevel = function(levelNumber) {
     board.level = levelNumber;
-    board.map = maps[board.level];
+    board.map = maps[levelNumber];
+    board.start = startPositions[levelNumber];
   };
 
   board.setLevel(defaultLevel);

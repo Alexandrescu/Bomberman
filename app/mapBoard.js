@@ -9,7 +9,7 @@ app.directive('mapBoard', function() {
       var gameDiv = element[0].firstElementChild;
 
       scope.cellSize = Math.min(
-        (gameDiv.clientWidth)/ scope.boardSize.width,
+        (gameDiv.clientWidth) / scope.boardSize.width,
         parent.clientHeight / scope.boardSize.height);
       console.log(scope.cellSize);
     }

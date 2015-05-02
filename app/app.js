@@ -1,18 +1,22 @@
 var app = angular.module('mapApp', []);
 
 app.controller('KeyMapping', ['$scope', 'mapLevel', function($scope, mapLevel) {
-  $scope.level = 2;
-  mapLevel.setLevel($scope.level);
+  $scope.changeLevel = function(level) {
+    $scope.level = level;
+    mapLevel.setLevel($scope.level);
 
-  $scope.gameBoard = mapLevel.map;
+    $scope.gameBoard = mapLevel.map;
 
-  $scope.boardSize = {
-    height: $scope.gameBoard.length,
-    width : $scope.gameBoard[0].length
+    $scope.heroX = mapLevel.start.x;
+    $scope.heroY = mapLevel.start.y;
+
+    $scope.boardSize = {
+      height: $scope.gameBoard.length,
+      width : $scope.gameBoard[0].length
+    };
   };
 
-  $scope.heroX = 16;
-  $scope.heroY = 4;
+  $scope.changeLevel(2);
 
   $scope.cellSize = 40;
 
