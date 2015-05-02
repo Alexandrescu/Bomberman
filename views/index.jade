@@ -9,7 +9,8 @@ block content
       div(class='col-md-2')
         | {{key}} and {{press}}
         code pressEvent
-        pre {{pressEvent | json}}
+        pre {{ {x: heroX, y:heroY} | json}}
+        pre {{ currentCycle | json}}
       div(class='col-md-10' style='height:75vh')
         map-board(ng-if='level == 1')
         map-board(ng-if='level == 2')

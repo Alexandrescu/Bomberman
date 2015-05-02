@@ -1,6 +1,6 @@
 var app = angular.module('mapApp', []);
 
-app.controller('KeyMapping', ['$scope', 'mapLevel', function($scope, mapLevel) {
+app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope, mapLevel, $timeout) {
   $scope.changeLevel = function(level) {
     $scope.level = level;
     mapLevel.setLevel($scope.level);
@@ -61,9 +61,49 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', function($scope, mapLevel) {
     return number;
   }
 
+  var cyclePositions = 5;
+
+  function moveMeBaby(direction) {
+    switch(direction) {
+      case up:
+        return 3;
+      case down:
+        return 0;
+      case right:
+        return 2;
+      case left:
+        return 1;
+      default: return -1;
+    }
+  }
+
+  $scope.currentCycle = 3;
   function move(directions){
-    $scope.heroX = bound($scope.heroX + directions.x, "width");
-    $scope.heroY = bound($scope.heroY + directions.y, "height");
+    var oldDirection = $scope.cycleDirection;
+    $scope.cycleDirection = moveMeBaby(directions);
+    $scope.currentCycle = ($scope.currentCycle + 1) % cyclePositions;
+
+    if($scope.cycleDirection != oldDirection) {
+      $scope.currentCycle = 3;
+    }
+
+    // Precision error
+    var oldX = $scope.heroX;
+    var oldY = $scope.heroY;
+
+
+    /*
+    var stepX = directions.x / cyclePositions;
+    var stepY = directions.y / cyclePositions;
+    while($scope.currentCycle != 0) {
+      $scope.heroX = bound($scope.heroX + stepX);
+      $scope.heroY = bound($scope.heroY + stepY);
+      $scope.currentCycle = ($scope.currentCycle + 1) % cyclePositions;
+    }
+    */
+
+    $scope.heroX = bound(oldX + directions.x, "width");
+    $scope.heroY = bound(oldY + directions.y, "height");
   }
 
   // Taken from angular js website
