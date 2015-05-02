@@ -1,15 +1,13 @@
 extends layout
 
 block content
-  body(ng-controller="KeyMapping", ng-keydown="clickMe($event)", tabindex='0')
+  body(ng-controller="KeyMapping", ng-keydown="buttonPress($event)", tabindex='0')
     h1= title
-    p Welcome {{test}} to #{title}
-    div(class='row')
-      div(class='col-md-3')
+    p Welcome to #{title}
+    div(class='row', style='height:100%')
+      div(class='col-md-2')
         | {{key}} and {{press}}
         code pressEvent
         pre {{pressEvent | json}}
-      div(class='gameBoard col-md-9')
-        div(ng-repeat="line in gameBoard" class='gameRow')
-          div(ng-repeat="place in line" class='gameCell' ng-class='{heroCell: $parent.$index == heroY && $index == heroX}')
-            | ({{$parent.$index}}, {{$index}})
+      div(class='col-md-10' style='height:75vh')
+        map-board
