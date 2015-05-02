@@ -8,10 +8,6 @@
 }
 
 .gameCell{
-    border: 1px solid;
-    background-color: green;
-    width: 60px;
-    height: 60px;
     float: left;
 }
 
@@ -20,9 +16,14 @@
 }
 
 .heroCell {
-    border: 1px solid;
     background-color: red;
     width: 60px;
     height: 60px;
     float: left;
+}
+
+.level1 {
+    background: url('../images/level1.png') no-repeat;
+    background-size: 100%;
+    padding: 0;
 }
