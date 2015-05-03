@@ -14,6 +14,12 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
   };
 
   $scope.changeLevel = function(level) {
+    $scope.hasGlasses = false;
+    $scope.hasMagicKey = false;
+    $scope.yoshiCarrots = 0;
+
+    $scope.won = false;
+
     $scope.level = level;
     mapLevel.setLevel($scope.level);
 
@@ -21,6 +27,7 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
 
     $scope.heroX = mapLevel.start.x;
     $scope.heroY = mapLevel.start.y;
+    $scope.cycleDirection = 0;
 
     $scope.totalCarrots = mapLevel.countCarrots();
 
@@ -102,6 +109,7 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
 
   $scope.currentCycle = 3;
   function move(directions){
+    if($scope.won) {return;}
     $scope.cycleDirection = moveMeBaby(directions);
     $scope.currentCycle = 4;
     cycleMe();
@@ -115,14 +123,14 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
     moveYoshi(newX, newY, oldX, oldY);
   }
 
-  $scope.hasGlasses = false;
-  $scope.hasMagicKey = false;
-  $scope.yoshiCarrots = 0;
   function moveYoshi(newX, newY, oldX, oldY) {
     var boardValue = $scope.gameBoard[newY][newX];
     var event = {};
 
     switch (boardValue) {
+      case 0:
+        event = {valid: true};
+        break;
       case -1:
         event = {valid:false};
         break;
@@ -152,12 +160,13 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
       case 5:
         if($scope.totalCarrots - $scope.yoshiCarrots == 0 && $scope.hasMagicKey) {
           event = {valid : true, msg: "You WON!"};
+          $scope.won = true;
         }
         else {
           event = {valid : false, msg: "You need the key and all the carrots to finish!"};
         }
         break;
-      default : event = {valid: true}
+      default : event = {valid: false}
     }
 
     if(event.valid) {
