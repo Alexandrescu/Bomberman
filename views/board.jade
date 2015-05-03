@@ -1,7 +1,12 @@
 div(ng-class='{"level1": level == 1, "level2": level == 2}',
 ng-style='{"width": (cellSize * boardSize.width) + "px", "height": (goldenRatio * cellSize * boardSize.height) + "px"}')
   div(class='hero',
-  ng-style='{"left": (heroX * cellSize) + "px", "top":(heroY * cellSize - cellSize * (goldenRatio - 1)) + "px", width: (cellSize * 25/40 * goldenRatio) + "px", height: (cellSize* goldenRatio) + "px", "background-size": ((cellSize * goldenRatio * 25/8) + "px") + " " + ((cellSize * goldenRatio * 4) + "px"), "background-position": (cellSize * goldenRatio * currentCycle * (25 / 40)) + "px " + (cellSize * goldenRatio * cycleDirection) + "px" }')
+  ng-style='{"left": (heroX * cellSize) + "px", ' +
+  '"top":(heroY * cellSize - cellSize * (goldenRatio - 1)) + "px", ' +
+  'width: (cellSize * 25/40 * goldenRatio) + "px", ' +
+  'height: (cellSize* goldenRatio) + "px", ' +
+  '"background-size": ((cellSize * goldenRatio * 25/8) + "px") + " " + ((cellSize * goldenRatio * 4) + "px"), ' +
+  '"background-position": (cellSize * goldenRatio * currentCycle * (25 / 40)) + "px " + (cellSize * goldenRatio * cycleDirection) + "px" }')
   div(ng-repeat="line in gameBoard track by $index" class='gameRow')
     div(ng-repeat="place in line track by $index", class='gameCell',
       ng-style='{width: cellSize + "px", height: cellSize + "px", "background-size": ((cellSize + "px") + " " + (cellSize + "px"))}',
