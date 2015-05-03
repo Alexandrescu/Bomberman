@@ -10,7 +10,7 @@ var app = angular.module('mapApp');
  */
 
 
-app.factory('mapLevel', function () {
+app.service('mapLevel', function () {
   var defaultLevel = 1;
   var maps = [];
   maps[1] = [
@@ -92,10 +92,16 @@ app.factory('mapLevel', function () {
 
   var board = {};
 
+  var golden = [];
+  golden[1] = 1.2;
+  golden[2] = 2;
+
   board.setLevel = function (levelNumber) {
     board.level = levelNumber;
-    board.map = maps[levelNumber];
+    board.map = [];
+    angular.copy(maps[levelNumber], board.map);
     board.start = startPositions[levelNumber];
+    board.goldenRatio = golden[levelNumber];
   };
 
   board.setLevel(defaultLevel);

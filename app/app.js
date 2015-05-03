@@ -4,6 +4,7 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
   /*
       Functie de debug. Cand asta e activata pot sa creez harti!
    */
+  $scope.goldenRatio = 2;
   $scope.debugMode = false;
   var markingValue = 5;
   $scope.mark = function(x, y) {
@@ -43,6 +44,7 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
     $scope.heroX = mapLevel.start.x;
     $scope.heroY = mapLevel.start.y;
     $scope.cycleDirection = 0;
+    $scope.goldenRatio = mapLevel.goldenRatio;
   };
 
   // Nivelul initial
@@ -120,15 +122,26 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
       $scope.currentCycle = ($scope.currentCycle + 1) % cyclePositions;
       if($scope.currentCycle != 3) {
         cycleMe();
+
+        // Aici am grija ca sa nu accelereze Yoshi prea tare
+        if($scope.currentCycle == 2) {
+          $timeout(function() {
+            $scope.moving = false;
+          }, 15);
+        }
       }
-    }, 30);
+    }, 50);
   }
 
+  // Cand am voie sa ma misc.
+  // In tranzitia miscarii nu il misc pentru ca dispare.
+  $scope.moving = false;
   // Incepem de pe mijlocul imaginii
   $scope.currentCycle = 3;
   function move(directions){
     // Atunci cand castig ma opresc.
-    if($scope.won) {return;}
+    if($scope.won || $scope.moving) {return;}
+    $scope.moving = true;
     $scope.cycleDirection = moveMeBaby(directions);
     $scope.currentCycle = 4;
     // Incepem animatia
