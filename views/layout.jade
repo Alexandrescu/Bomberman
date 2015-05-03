@@ -1,8 +1,13 @@
 doctype html
 html(ng-app='mapApp')
   head
-    title= title
+    title= "Bijoux Yoshi"
+    link(rel='styleSheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/gameBoard.css')
     script(src='javascripts/angular.js')
     script(src='javascripts/app.js')
-    block content
+    script(src='javascripts/mapLevel.js')
+    script(src='javascripts/mapBoard.js')
+
+  block content
