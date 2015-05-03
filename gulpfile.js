@@ -41,3 +41,6 @@ gulp.task('server', ['build', 'app', 'express:run'], function () {
 });
 
 gulp.task('default', ['server']);
+
+gulp.task('fullBuild', ['build', 'app']);
+
