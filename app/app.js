@@ -1,6 +1,18 @@
 var app = angular.module('mapApp', []);
 
 app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope, mapLevel, $timeout) {
+  $scope.debugMode = false;
+  var markingValue = 5;
+  $scope.mark = function(x, y) {
+    if(!$scope.debugMode) {return}
+    if($scope.gameBoard[x][y] == markingValue) {
+      $scope.gameBoard[x][y] = 0;
+    }
+    else {
+      $scope.gameBoard[x][y] = markingValue;
+    }
+  };
+
   $scope.changeLevel = function(level) {
     $scope.level = level;
     mapLevel.setLevel($scope.level);
@@ -9,6 +21,8 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
 
     $scope.heroX = mapLevel.start.x;
     $scope.heroY = mapLevel.start.y;
+
+    $scope.totalCarrots = mapLevel.countCarrots();
 
     $scope.boardSize = {
       height: $scope.gameBoard.length,
@@ -88,35 +102,74 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
 
   $scope.currentCycle = 3;
   function move(directions){
-    var oldDirection = $scope.cycleDirection;
     $scope.cycleDirection = moveMeBaby(directions);
-    /*
-    $scope.currentCycle = ($scope.currentCycle + 1) % cyclePositions;
-
-    if($scope.cycleDirection != oldDirection) {
-      $scope.currentCycle = 3;
-    }
-    */
     $scope.currentCycle = 4;
     cycleMe();
 
-    // Precision error
     var oldX = $scope.heroX;
     var oldY = $scope.heroY;
 
+    var newX = bound(oldX + directions.x, "width");
+    var newY = bound(oldY + directions.y, "height");
 
-    /*
-    var stepX = directions.x / cyclePositions;
-    var stepY = directions.y / cyclePositions;
-    while($scope.currentCycle != 0) {
-      $scope.heroX = bound($scope.heroX + stepX);
-      $scope.heroY = bound($scope.heroY + stepY);
-      $scope.currentCycle = ($scope.currentCycle + 1) % cyclePositions;
+    moveYoshi(newX, newY, oldX, oldY);
+  }
+
+  $scope.hasGlasses = false;
+  $scope.hasMagicKey = false;
+  $scope.yoshiCarrots = 0;
+  function moveYoshi(newX, newY, oldX, oldY) {
+    var boardValue = $scope.gameBoard[newY][newX];
+    var event = {};
+
+    switch (boardValue) {
+      case -1:
+        event = {valid:false};
+        break;
+      case  1:
+        if($scope.hasGlasses) {
+          event = {valid:true};
+        }
+        else {
+          event = {valid: false, msg: "You need the blue mushroom."};
+        }
+        break;
+      case 2:
+        $scope.yoshiCarrots += 1;
+        $scope.gameBoard[newY][newX] = 0;
+        event = {valid : true, msg: "Ate carrot! Nom nom!"};
+        break;
+      case 3:
+        $scope.hasGlasses = true;
+        $scope.gameBoard[newY][newX] = 0;
+        event = {valid : true, msg: "Got the swimming mushroom! We can swim!"};
+        break;
+      case 4:
+        $scope.hasMagicKey = true;
+        $scope.gameBoard[newY][newX] = 0;
+        event = {valid: true, msg: "Got the key! Collect all carrots and finish the game!"};
+        break;
+      case 5:
+        if($scope.totalCarrots - $scope.yoshiCarrots == 0 && $scope.hasMagicKey) {
+          event = {valid : true, msg: "You WON!"};
+        }
+        else {
+          event = {valid : false, msg: "You need the key and all the carrots to finish!"};
+        }
+        break;
+      default : event = {valid: true}
     }
-    */
 
-    $scope.heroX = bound(oldX + directions.x, "width");
-    $scope.heroY = bound(oldY + directions.y, "height");
+    if(event.valid) {
+      $scope.heroX = newX;
+      $scope.heroY = newY;
+    }
+    else {
+      $scope.heroX = oldX;
+      $scope.heroY = oldY;
+    }
+
+    $scope.yoshiLog = event.msg;
   }
 
   // Taken from angular js website

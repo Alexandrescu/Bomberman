@@ -47,3 +47,28 @@
     background: url("../images/yoshi-good.png");
     transition: all 0.150s ease, background-position 0.00001ms;
 }
+
+.blackCell {
+    background: black;
+}
+
+.waterCell {
+    background: darkblue;
+}
+
+.carrotCell {
+    background-image: url("../images/carrot.png");
+    background-size: 50px 50px;
+}
+
+.swimCell {
+    background-image: url("../images/swim.png");
+}
+
+.keyCell {
+    background-image: url("../images/key.png");
+}
+
+.finishCell {
+    background-image: url("../images/finish.png");
+}
