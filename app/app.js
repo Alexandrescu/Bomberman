@@ -77,15 +77,28 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
     }
   }
 
+  function cycleMe() {
+    $timeout(function() {
+      $scope.currentCycle = ($scope.currentCycle + 1) % cyclePositions;
+      if($scope.currentCycle != 3) {
+        cycleMe();
+      }
+    }, 30);
+  }
+
   $scope.currentCycle = 3;
   function move(directions){
     var oldDirection = $scope.cycleDirection;
     $scope.cycleDirection = moveMeBaby(directions);
+    /*
     $scope.currentCycle = ($scope.currentCycle + 1) % cyclePositions;
 
     if($scope.cycleDirection != oldDirection) {
       $scope.currentCycle = 3;
     }
+    */
+    $scope.currentCycle = 4;
+    cycleMe();
 
     // Precision error
     var oldX = $scope.heroX;

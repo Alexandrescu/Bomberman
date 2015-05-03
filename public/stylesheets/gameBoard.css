@@ -45,5 +45,5 @@
     background: blue;
     display: block;
     background: url("../images/yoshi-good.png");
-    transition: all 0.1s ease, background-position 1ms;
+    transition: all 0.150s ease, background-position 0.00001ms;
 }
