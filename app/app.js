@@ -55,12 +55,8 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
 
   // Event-ul trigger-uit atunci cand apas un buton
   $scope.buttonPress = function($event) {
-    $scope.press = $event.keyCode;
-    $scope.key = String.fromCharCode($scope.press);
-    $scope.pressEvent = simpleKeys($event);
-    console.log($event);
-
-    move(normalize($scope.press));
+    var press = $event.keyCode;
+    move(normalize(press));
   };
 
   // Traduceri din/inspre obiecte
@@ -220,13 +216,5 @@ app.controller('KeyMapping', ['$scope', 'mapLevel', '$timeout', function($scope,
     }
 
     $scope.yoshiLog = event.msg;
-  }
-
-  // De pe AngularJS
-  function simpleKeys (original) {
-    return Object.keys(original).reduce(function (obj, key) {
-      obj[key] = typeof original[key] === 'object' ? '{ ... }' : original[key];
-      return obj;
-    }, {});
   }
 }]);
