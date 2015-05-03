@@ -2,14 +2,15 @@ extends layout
 
 block content
   body(ng-controller="KeyMapping", ng-keydown="buttonPress($event)", tabindex='0')
-    p Welcome to #{title}
-    button(type="button" class="btn btn-primary", ng-click='changeLevel(1)') Level 1
-    button(type="button" class="btn btn-success", ng-click='changeLevel(2)') Level 2
     div(class='row', style='height:100%')
       div(class='col-md-10', style='height:80vh')
         map-board(ng-if='level == 1')
         map-board(ng-if='level == 2')
       div(class='col-md-2')
+        p Welcome to Bijoux!
+        audio(src="/sounds/background.mp3", controls, autoplay, loop)
+        button(type="button" class="btn btn-primary", ng-click='changeLevel(1)') Level 1
+        button(type="button" class="btn btn-success", ng-click='changeLevel(2)') Level 2
         pre Log : {{yoshiLog? yoshiLog : 'zzz...'}}
         pre Can swim: {{hasGlasses}}
         pre Carrots {{yoshiCarrots}} / {{totalCarrots}}
